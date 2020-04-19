@@ -5,8 +5,6 @@ from markupsafe import escape
 from newspaper import Article
 import requests
 import nltk
-from IPython.display import Image
-from IPython.core.display import HTML 
 
 
 app = Flask(__name__)
@@ -66,5 +64,5 @@ def analyze():
 
     #return render_template('news-summary.html',**content)
  
- if __name__ == '__main__':
-   app.run(debug = True)
+ # if __name__ == '__main__':
+ #   app.run(debug = True)
