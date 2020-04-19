@@ -5,8 +5,16 @@ from markupsafe import escape
 from newspaper import Article
 import requests
 import nltk
+import ssl
 
 
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+   
 app = Flask(__name__)
 
 @app.route('/')
@@ -57,8 +65,8 @@ def analyze():
             "article_text" : article.text,
             "article_title" : article.title,
             "article_summary" : article.summary,
-            "keywords":article.keywords,
-            "tags":article.tags
+            #"keywords":article.keywords,
+            #"tags":article.tags
         }
         return content
 
