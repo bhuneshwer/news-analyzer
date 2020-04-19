@@ -64,5 +64,6 @@ def analyze():
 
     #return render_template('news-summary.html',**content)
  
- if __name__ == '__main__':
-   app.run(debug = True)
+if __name__ == '__main__':
+    # Threaded option to enable multiple instances for multiple user access support
+    app.run(threaded=True, debug=True, port=5000)
