@@ -8,15 +8,9 @@
 </head>
 
 <body>
-    <p>hellossd</p>
-
-
     <div>
-        {% if url %}
-        <h1>{{url}} says: </h1>
-        {% endif %}
-        {% if note %}
-        <p>{{note}}</p>
+        {%if news_html %}
+            {{news_html}}
         {% endif %}
     </div>
 </body>
