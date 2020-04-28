@@ -7,6 +7,7 @@ from newspaper import Article
 import requests
 import nltk
 import ssl
+from flask_caching import Cache
 from flask_cors import CORS
 
 
@@ -17,11 +18,18 @@ except AttributeError:
 else:
     ssl._create_default_https_context = _create_unverified_https_context
 
+cache = Cache(config={'CACHE_TYPE': 'simple'})
 app = Flask(__name__)
+cache.init_app(app)
 
-CORS(app)
+
+CORS(app, supports_credentials=True)
 
 #cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+# @app.route("/someroute")
+# @cross_origin()
+# def helloWorld():
+#   return "Hello, cross-origin-world!"
 
 
 @app.route('/')
@@ -36,6 +44,7 @@ def show_user_profile(username):
 
 
 @app.route("/get_html",methods=['GET'])
+@cache.cached(timeout=60, query_string=True)
 def get_html():
     news_url = request.args.get("url")
     try:
@@ -47,6 +56,7 @@ def get_html():
 
 
 @app.route('/analyze',methods=['GET'])
+@cache.cached(timeout=60, query_string=True)
 def analyze():
     news_url = request.args.get("url")
     if(news_url and len(news_url)):
